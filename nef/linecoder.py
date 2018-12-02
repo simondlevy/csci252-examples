@@ -39,7 +39,7 @@ def finishplot():
 
 if __name__ == '__main__':
 
-    n_samples = 1000
+    n_samples = 100
     x = np.linspace(+1,-1, n_samples)
 
     alpha = 50
