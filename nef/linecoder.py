@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 '''
-Illustrates NEF Principle 1: A population of neurons collectively represents a
-time-varying vector of real numbers through non-linear encoding and linear
-decoding.
+Uses a single neuron and a single value to illustrate NEF Principle 1: 
+A population of neurons collectively represents a time-varying vector of real
+numbers through non-linear encoding and linear decoding.
 
 Copyright (C) Simon D. Levy 2018
 
