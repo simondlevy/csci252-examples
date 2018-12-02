@@ -54,7 +54,7 @@ def finishplot():
     plt.xlim([-1,+1])
     plt.ylim([.1,50])
     plt.xlabel('x')
-    plt.ylabel('Firing rate (Hz)')
+    plt.ylabel('Firing rate a (Hz)')
     plt.show()    
 
 def plotcurves(n):

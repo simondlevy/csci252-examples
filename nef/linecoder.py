@@ -25,27 +25,49 @@ import numpy as np
 import matplotlib.pyplot as plt
 from tuningcurves import curve
 
-# Parameters to experiment with
-N_SAMPLES = 200
-RADIUS    = 30
-ALPHA     = 100
-E         = +1
-B         = 0
+def plotcurve(alpha, e, x, b, style='b'):
 
-# Randomly sample values in the interval [0,RADIUS]
-x = np.random.uniform(0, RADIUS, N_SAMPLES)
+    plt.plot(x, curve(alpha, e, x, b), style)
 
-# Compute neuron's activation in response to these samples
-a = curve(ALPHA, E, x, B)
+def finishplot():
 
-# Show the samples
-plt.scatter(x, a, s=1.0)
-plt.xlabel('x')
-plt.ylabel('a')
-plt.show()
+    plt.xlim([-1,+1])
+    plt.ylim([.1,50])
+    plt.xlabel('x')
+    plt.ylabel('Firing rate a (Hz)')
+    plt.show()    
 
-# Solve for decoder weight d, discarding everying but slope
-X = np.vstack([x, np.ones(len(x))]).T
-d = np.linalg.lstsq(X, a)[0][0]
-print(d)
+if __name__ == '__main__':
 
+    n_samples = 1000
+    x = np.linspace(+1,-1, n_samples)
+
+    alpha = 50
+    e = +1
+    b = 10
+    
+    # Plot the theoretical tuning curve
+    plotcurve(alpha, e, x, b, 'b')
+    finishplot()
+
+    # Randomly sample values in the interval [-1,+1]
+    x = np.random.uniform(-1, +1, n_samples)
+
+    # Compute neuron's activation in response to these samples
+    a = curve(alpha, e, x, b)
+
+    # Show the samples
+    plt.scatter(x, a, s=1.0)
+    plt.xlim([-1,+1])
+    plt.ylim([0,50])
+    plt.xlabel('x')
+    plt.ylabel('Firing rate a (Hz)')
+
+    # Solve for decoder weight d, discarding everying but slope and intercept
+    X = np.vstack([x, np.ones(len(x))]).T
+    d = np.linalg.lstsq(X, a)[0][0]
+    print('d = %+2.2f' % d)
+
+    # Draw the linear fit
+    plt.plot(x, x*d, 'g')
+    plt.show()
