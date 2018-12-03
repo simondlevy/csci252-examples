@@ -25,49 +25,52 @@ import numpy as np
 import matplotlib.pyplot as plt
 from tuningcurves import curve
 
-def plotcurve(alpha, e, x, b, style='b'):
-
-    plt.plot(x, curve(alpha, e, x, b), style)
-
-def finishplot():
-
-    plt.xlim([-1,+1])
-    plt.ylim([.1,50])
-    plt.xlabel('x')
-    plt.ylabel('Firing rate a (Hz)')
-    plt.show()    
-
 if __name__ == '__main__':
 
     n_samples = 100
-    x = np.linspace(+1,-1, n_samples)
+    x = np.linspace(.1,1, n_samples)
 
     alpha = 50
     e = +1
-    b = 10
+    b = 0
     
     # Plot the theoretical tuning curve
-    plotcurve(alpha, e, x, b, 'b')
-    finishplot()
+    a = curve(alpha, e, x, b)
+    #plt.plot(x, a)
+    #plt.xlabel('x')
+    #plt.ylabel('Firing rate a (Hz)')
+    #plt.show()    
 
     # Randomly sample values in the interval [-1,+1]
-    x = np.random.uniform(-1, +1, n_samples)
+    xsamp = np.random.uniform(.01, 1, n_samples)
 
     # Compute neuron's activation in response to these samples
-    a = curve(alpha, e, x, b)
+    asamp = curve(alpha, e, xsamp, b)
 
     # Show the samples
-    plt.scatter(x, a, s=1.0)
-    plt.xlim([-1,+1])
-    plt.ylim([0,50])
-    plt.xlabel('x')
-    plt.ylabel('Firing rate a (Hz)')
+    #plt.scatter(xsamp, asamp, s=1.0)
+    #plt.xlabel('x')
+    #plt.ylabel('Firing rate a (Hz)')
+    #plt.show()
+
+    # Swap axes
+    plt.scatter(asamp, xsamp, s=1.0)
+    plt.xlabel('Firing rate a (Hz)')
+    plt.ylabel('x')
+    plt.show()
 
     # Solve for decoder weight d, discarding everying but slope and intercept
-    X = np.vstack([x, np.ones(len(x))]).T
-    d = np.linalg.lstsq(X, a)[0][0]
-    print('d = %+2.2f' % d)
+    A = np.vstack([a, np.ones(len(x))]).T
+    d = .05 #np.linalg.lstsq(A, x)[0][0]
 
     # Draw the linear fit
-    plt.plot(x, x*d, 'g')
+    plt.scatter(asamp, xsamp, s=1.0)
+    plt.xlabel('Firing rate a (Hz)')
+    plt.ylabel('x')
+    t = np.linspace(0,40,n_samples)
+    xhat = d * t
+    plt.plot(xhat, 'g')
+    plt.xlim([0,40])
+    plt.ylim([0,1])
+    plt.title('d = %f' % d)
     plt.show()
