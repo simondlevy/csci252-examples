@@ -66,11 +66,11 @@ if __name__ == '__main__':
 
     # Draw the linear fit
     plt.scatter(asamp, xsamp, s=1.0)
-    plt.xlabel('Firing rate a (Hz)')
-    plt.ylabel('x')
     t = np.linspace(0,40,n_samples)
     xhat = d * t
     plt.plot(xhat, 'g')
+    plt.legend([r'$\hat{x}$', 'x'])
+    plt.xlabel('Firing rate a (Hz)')
     plt.xlim([0,40])
     plt.ylim([0,1.1])
     plt.title('d = %f' % d)
