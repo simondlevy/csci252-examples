@@ -55,6 +55,8 @@ if __name__ == '__main__':
 
     # Swap axes
     plt.scatter(asamp, xsamp, s=1.0)
+    plt.xlim([0,40])
+    plt.ylim([0,1.1])
     plt.xlabel('Firing rate a (Hz)')
     plt.ylabel('x')
     plt.show()
@@ -71,6 +73,6 @@ if __name__ == '__main__':
     xhat = d * t
     plt.plot(xhat, 'g')
     plt.xlim([0,40])
-    plt.ylim([0,1])
+    plt.ylim([0,1.1])
     plt.title('d = %f' % d)
     plt.show()
