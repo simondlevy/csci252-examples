@@ -62,8 +62,7 @@ if __name__ == '__main__':
     plt.show()
 
     # Solve for decoder weight d, discarding everying but slope and intercept
-    A = np.vstack([a, np.ones(len(x))]).T
-    d = .05 #np.linalg.lstsq(A, x)[0][0]
+    d = np.linalg.lstsq(np.vstack([asamp, np.ones(len(x))]).T, xsamp)[0][0]
 
     # Draw the linear fit
     plt.scatter(asamp, xsamp, s=1.0)
